@@ -19,7 +19,7 @@ jobs:
 
       - name: Rename txt files
         run: |
-          find . -type f -name '*.txt' -exec sh -c 'x="{}"; echo mv "$x" "$(echo "$x" |rev |cut -c 4- |rev)md"' \;
+          find . -type f -name '*.txt' -exec sh -c 'x="{}"; mv "$x" "$(echo "$x" |rev |cut -c 4- |rev)md"' \;
 
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@3.7.1
