@@ -1,0 +1,30 @@
+name: Build and Deploy
+
+on: push
+
+jobs:
+  create-pdf:
+    name: Create pdfs
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2.3.1
+        with:
+          persist-credentials: false
+
+      - name: Rename txt files
+        run: |
+          find . -type f -name '*.txt' -exec sh -c 'x="{}"; mv "$x" "$(echo "$x" |rev |cut -c 4- |rev)md"' \;
+
+      - name: Create PDF files
+        uses: seppo0010/montoch-action@0.0.1
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: pdfs
+          path: |
+            ./*.pdf
+            ./**/*.pdf
